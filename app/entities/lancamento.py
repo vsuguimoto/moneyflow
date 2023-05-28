@@ -4,4 +4,5 @@ from dataclasses import dataclass
 class Lancamento:
     nome: str
     valor: float
+    tipo: str
     categoria: str
