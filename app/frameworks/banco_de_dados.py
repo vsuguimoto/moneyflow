@@ -34,7 +34,7 @@ class BancoDeDados:
 
     def criar_categoria(self, nome, descricao=None):
         cursor = self.conexao.cursor()
-        cursor.execute("INSERT INTO categorias (nome, descricao) VALUES (?, ?)", (nome, descricao))
+        cursor.execute(f"INSERT INTO categorias (nome, descricao) VALUES ('{nome}', '{descricao}')")
         self.conexao.commit()
 
     def apagar_categoria(self, categoria_id):
@@ -42,7 +42,7 @@ class BancoDeDados:
         cursor.execute("DELETE FROM categorias WHERE id = ?", (categoria_id,))
         self.conexao.commit()
 
-    def inserir_lancamento(self, nome, tipo, valor, categoria_id):
+    def criar_lancamento(self, nome, tipo, valor, categoria_id):
         cursor = self.conexao.cursor()
         cursor.execute("INSERT INTO lancamentos (nome, tipo, valor, categoria_id) VALUES (?, ?, ?, ?)",
                        (nome, tipo, valor, categoria_id))
