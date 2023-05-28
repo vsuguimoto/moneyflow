@@ -39,13 +39,12 @@ class BancoDeDados:
 
     def apagar_categoria(self, categoria_id):
         cursor = self.conexao.cursor()
-        cursor.execute("DELETE FROM categorias WHERE id = ?", (categoria_id,))
+        cursor.execute(f"DELETE FROM categorias WHERE id = {categoria_id}")
         self.conexao.commit()
 
     def criar_lancamento(self, nome, tipo, valor, categoria_id):
         cursor = self.conexao.cursor()
-        cursor.execute("INSERT INTO lancamentos (nome, tipo, valor, categoria_id) VALUES (?, ?, ?, ?)",
-                       (nome, tipo, valor, categoria_id))
+        cursor.execute(f"INSERT INTO lancamentos (nome, tipo, valor, categoria_id) VALUES ('{nome}', '{tipo}', {valor}, {categoria_id})")
         self.conexao.commit()
 
     def carregar_lancamentos_lote(self, lancamentos):
