@@ -3,9 +3,9 @@ from app.entities.lancamento import Lancamento
 
 class LancarCreditoUseCase:
 
-    def __init__(self, banco_de_dados: BancoDeDados):
-        self.banco_de_dados = banco_de_dados
+    def __init__(self):
+        self.banco_de_dados = BancoDeDados()
 
     def executar(self, nome, valor, categoria_id:int):
-        self.banco_de_dados.inserir_lancamento(nome=nome, tipo='C', valor=valor, categoria_id=categoria_id)
+        self.banco_de_dados.criar_lancamento(nome=nome, tipo='C', valor=valor, categoria_id=categoria_id)
         self.banco_de_dados.fechar_conexao()

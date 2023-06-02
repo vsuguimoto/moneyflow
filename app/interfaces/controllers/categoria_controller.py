@@ -1,21 +1,22 @@
 from app.use_cases.criar_categoria import CriarCategoriaUseCase
 from app.use_cases.apagar_categoria import ApagarCategoriaUseCase
+from app.use_cases.categoria_use_case import CategoriaUseCase
+
 
 class CategoriaController:
-    def __init__(self, banco_de_dados):
-        self.criar_categoria_use_case = CriarCategoriaUseCase(banco_de_dados)
-        self.apagar_categoria_use_case = ApagarCategoriaUseCase(banco_de_dados)
+    def __init__(self):
+        self.categoria_use_case = CategoriaUseCase()
 
     def criar_categoria(self, nome):
         try:
-            categoria = self.criar_categoria_use_case.executar(nome)
+            categoria = self.categoria_use_case.criar_categoria_use_case(nome)
             return categoria
         except Exception as e:
             return str(e)
 
-    def apagar_categoria(self, categoria_id):
+    def obter_categoria(self):
         try:
-            self.apagar_categoria_use_case.executar(categoria_id)
-            return "Categoria apagada com sucesso."
+            categorias = self.categoria_use_case.obter_categoria_use_case()
+            return categorias
         except Exception as e:
             return str(e)

@@ -2,9 +2,10 @@ import sqlite3
 
 # Classe responsável pela manipulação do banco de dados
 class BancoDeDados:
-    def __init__(self, nome_banco):
-        self.conexao = sqlite3.connect(nome_banco)
+    def __init__(self):
+        self.conexao = sqlite3.connect('MoneyFlow.db')
         self.criar_tabelas()
+    
 
     def criar_tabelas(self):
         cursor = self.conexao.cursor()
@@ -13,8 +14,7 @@ class BancoDeDados:
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS categorias (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                nome TEXT NOT NULL,
-                descricao TEXT
+                nome TEXT NOT NULL
             )
         """)
 
@@ -25,8 +25,20 @@ class BancoDeDados:
                 nome TEXT NOT NULL,
                 tipo TEXT CHECK(tipo IN ('C', 'D')) NOT NULL,
                 valor REAL NOT NULL,
+                data_compra TIMESTAMP,
+                data_lancamento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 categoria_id INTEGER,
+                pessoa_id INTEGER NOT NULL,
+                FOREIGN KEY (pessoa_id) REFERENCES pessoas (id),
                 FOREIGN KEY (categoria_id) REFERENCES categorias (id)
+            )
+        """)
+
+        # Tabela de lançamentos
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS pessoas (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nome TEXT NOT NULL
             )
         """)
 
@@ -34,7 +46,7 @@ class BancoDeDados:
 
     def criar_categoria(self, nome, descricao=None):
         cursor = self.conexao.cursor()
-        cursor.execute(f"INSERT INTO categorias (nome, descricao) VALUES ('{nome}', '{descricao}')")
+        cursor.execute(f"INSERT INTO categorias (nome) VALUES ('{nome}')")
         self.conexao.commit()
 
     def apagar_categoria(self, categoria_id):
@@ -42,9 +54,28 @@ class BancoDeDados:
         cursor.execute(f"DELETE FROM categorias WHERE id = {categoria_id}")
         self.conexao.commit()
 
-    def criar_lancamento(self, nome, tipo, valor, categoria_id):
+
+    def obter_categoria(self):
         cursor = self.conexao.cursor()
-        cursor.execute(f"INSERT INTO lancamentos (nome, tipo, valor, categoria_id) VALUES ('{nome}', '{tipo}', {valor}, {categoria_id})")
+        categorias = cursor.execute("SELECT nome FROM categorias")
+        
+        return categorias.fetchall()
+
+
+    def criar_pessoa(self, nome):
+        cursor = self.conexao.cursor()
+        cursor.execute(f"INSERT INTO pessoas (nome) VALUES ('{nome}')")
+        self.conexao.commit()
+
+    def obter_pessoa(self):
+        cursor = self.conexao.cursor()
+        valores = cursor.execute("SELECT nome FROM pessoas")
+        
+        return valores.fetchall()
+
+    def criar_lancamento(self, nome, tipo, valor, data_compra, categoria_id, pessoa_id):
+        cursor = self.conexao.cursor()
+        cursor.execute(f"INSERT INTO lancamentos (nome, tipo, valor, data_compra, categoria_id, pessoa_id) VALUES ('{nome}', '{tipo}', {valor}, '{data_compra}', {categoria_id}, {pessoa_id})")
         self.conexao.commit()
 
     def carregar_lancamentos_lote(self, lancamentos):
