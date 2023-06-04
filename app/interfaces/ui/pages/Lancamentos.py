@@ -12,12 +12,16 @@ st.header('Lançamento')
 
 # TODO -> Criar status para o mês atual
 
+controlador_lancamento = LancamentoController()
+controlador_categoria = CategoriaController()
 
-COLUNAS = st.columns(2) 
+COLUNAS = st.columns(2)
 with COLUNAS[0]:
-    controlador_lancamento = LancamentoController()
     VALOR = st.number_input(label='Valor em R$',min_value=0.01)
+    DATA_LANCAMENTO = st.date_input('Data do lançamento')
+    
+    
 with COLUNAS[1]:
-    controlador_categoria = CategoriaController()
     lista_categorias = controlador_categoria.obter_categoria()
     CATEGORIA = st.selectbox(label='Categoria', options=lista_categorias)
+    TIPO = st.selectbox('Crédito ou Débito', ['Crédito', 'Débito'])
