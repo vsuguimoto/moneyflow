@@ -7,15 +7,15 @@ class LancamentoController:
     def __init__(self):
         self.lancamentos = LancamentoUseCase()
 
-    def lancamento(self, nome, valor, tipo, data_compra,categoria_id, pessoa_id):
+    def lancamento(self, nome, valor, tipo, data_compra, categorias_id, pessoas_id):
         try:
             lancamento_atual = Lancamento(
                 nome=nome,
                 valor=valor,
                 tipo=tipo,
                 data_compra=data_compra,
-                categoria_id=categoria_id,
-                pessoa_id=pessoa_id
+                categorias_id=categorias_id,
+                pessoas_id=pessoas_id
             )
             lancamento = self.lancamentos.criar_lancamento(lancamento_atual)
         

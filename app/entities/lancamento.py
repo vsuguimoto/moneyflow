@@ -7,5 +7,5 @@ class Lancamento:
     valor: float
     tipo: str
     data_compra: datetime
-    categoria_id: int
-    pessoa_id: int
+    categorias_id: int
+    pessoas_id: int

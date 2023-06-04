@@ -73,8 +73,8 @@ def lancamentos():
                 valor=VALOR,
                 tipo=TIPO,
                 data_compra=DATA_LANCAMENTO,
-                pessoa_id=PESSOA_ID,
-                categoria_id=CATEGORIA_ID
+                pessoas_id=PESSOA_ID,
+                categorias_id=CATEGORIA_ID
             )
             st.success('Sucesso!')
 
