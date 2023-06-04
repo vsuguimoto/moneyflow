@@ -1,23 +1,23 @@
-from app.use_cases.lancar_credito import LancarCreditoUseCase
-from app.use_cases.lancar_debito import LancarDebitoUseCase
+from app.use_cases.lancamento_use_case import LancamentoUseCase
+from app.entities.lancamento import Lancamento
 from app.frameworks.banco_de_dados import BancoDeDados
 
 class LancamentoController:
 
     def __init__(self):
-        self.lancar_credito_use_case = LancarCreditoUseCase()
-        self.lancar_debito_use_case = LancarDebitoUseCase()
+        self.lancamentos = LancamentoUseCase()
 
-    def lancar_credito(self, nome, valor, categoria_id):
+    def lancamento(self, nome, valor, tipo, data_compra,categoria_id, pessoa_id):
         try:
-            lancamento = self.lancar_credito_use_case.executar(nome=nome, valor=valor, categoria_id=categoria_id)
-            return lancamento
-        except Exception as e:
-            return str(e)
-    
-    def lancar_debito(self, nome, valor, categoria_id):
-        try:
-            lancamento = self.lancar_debito_use_case.executar(nome=nome, valor=valor, categoria_id=categoria_id)
-            return lancamento
+            lancamento_atual = Lancamento(
+                nome=nome,
+                valor=valor,
+                tipo=tipo,
+                data_compra=data_compra,
+                categoria_id=categoria_id,
+                pessoa_id=pessoa_id
+            )
+            lancamento = self.lancamentos.criar_lancamento(lancamento_atual)
+        
         except Exception as e:
             return str(e)

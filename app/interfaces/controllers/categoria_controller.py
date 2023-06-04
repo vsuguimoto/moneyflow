@@ -1,5 +1,3 @@
-from app.use_cases.criar_categoria import CriarCategoriaUseCase
-from app.use_cases.apagar_categoria import ApagarCategoriaUseCase
 from app.use_cases.categoria_use_case import CategoriaUseCase
 
 

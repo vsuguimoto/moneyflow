@@ -1,8 +1,6 @@
 from app.frameworks.banco_de_dados import BancoDeDados
 from app.entities.pessoa import Pessoa
 
-import pandas as pd
-
 class PessoaUseCase:
 
     def __init__(self, banco_de_dados):
@@ -13,11 +11,14 @@ class PessoaUseCase:
         # Todos os nomes sempre serão em caixa alta
         nome_upper = nome.upper()
         pessoa = Pessoa(nome=nome_upper)
-        self.banco_de_dados.criar_pessoa(nome)
+        self.banco_de_dados.criar_pessoa(nome_upper)
 
 
     def obter_pessoas_use_case(self):
         nome_pessoas = self.banco_de_dados.obter_pessoa()
-        pessoas = pd.DataFrame(nome_pessoas)
-        return pessoas
+        try:
+            pessoas = dict(nome_pessoas)
+            return pessoas
+        except:
+            print('ObterPessoas: não foi possível converter para JSON')
     

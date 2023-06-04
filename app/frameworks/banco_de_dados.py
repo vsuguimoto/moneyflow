@@ -56,7 +56,7 @@ class BancoDeDados:
 
     def obter_categoria(self):
         cursor = self.conexao.cursor()
-        categorias = cursor.execute("SELECT nome FROM categorias")
+        categorias = cursor.execute("SELECT id, nome FROM categorias")
         
         return categorias.fetchall()
 
@@ -68,7 +68,7 @@ class BancoDeDados:
 
     def obter_pessoa(self):
         cursor = self.conexao.cursor()
-        valores = cursor.execute("SELECT nome FROM pessoas")
+        valores = cursor.execute("SELECT id, nome FROM pessoas")
         
         return valores.fetchall()
 

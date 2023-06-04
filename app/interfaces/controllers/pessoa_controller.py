@@ -7,7 +7,7 @@ class PessoaController:
         self.banco_de_dados = BancoDeDados()
     
 
-    def obter_pessoas(self):
+    def obter_pessoas(self) -> dict:
         pessoa_use_case = PessoaUseCase(self.banco_de_dados)
         nome_pessoas = pessoa_use_case.obter_pessoas_use_case()
 
