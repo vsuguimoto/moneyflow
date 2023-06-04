@@ -6,6 +6,6 @@ class Lancamento:
     nome: str
     valor: float
     tipo: str
-    categoria: str
     data_compra: datetime
-    data_lancamento: datetime
+    categoria_id: int
+    pessoa_id: int
