@@ -43,6 +43,7 @@ class BancoDeDados:
 
         self.conexao.commit()
 
+
     def criar_categoria(self, nome):
         cursor = self.conexao.cursor()
         cursor.execute(f"INSERT INTO categorias (nome) VALUES ('{nome}')")
@@ -52,7 +53,6 @@ class BancoDeDados:
         cursor = self.conexao.cursor()
         cursor.execute(f"DELETE FROM categorias WHERE id = {categoria_id}")
         self.conexao.commit()
-
 
     def obter_categoria(self):
         cursor = self.conexao.cursor()
@@ -72,15 +72,10 @@ class BancoDeDados:
         
         return valores.fetchall()
 
+
     def criar_lancamento(self, nome, tipo, valor, data_compra, categoria_id, pessoa_id):
         cursor = self.conexao.cursor()
         cursor.execute(f"INSERT INTO lancamentos (nome, tipo, valor, data_compra, categoria_id, pessoa_id) VALUES ('{nome}', '{tipo}', {valor}, '{data_compra}', {categoria_id}, {pessoa_id})")
-        self.conexao.commit()
-
-    def carregar_lancamentos_lote(self, lancamentos):
-        cursor = self.conexao.cursor()
-        cursor.executemany("INSERT INTO lancamentos (nome, tipo, valor, categoria_id) VALUES (?, ?, ?, ?)",
-                           lancamentos)
         self.conexao.commit()
 
     def fechar_conexao(self):
