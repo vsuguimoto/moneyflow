@@ -13,10 +13,12 @@ class LancamentoUseCase:
             valor=lancamento.valor,
             tipo=lancamento.tipo,
             data_compra=lancamento.data_compra,
-            categoria_id=lancamento.categoria_id,
-            pessoa_id=lancamento.pessoa_id
+            categorias_id=lancamento.categorias_id,
+            pessoas_id=lancamento.pessoas_id
         )
-    
+
+        self.banco_de_dados.criar_visao_mes()
+
     def remover_lancamento(self, lancamento_id) -> None:
         self.banco_de_dados.apagar_lancamento(
             lancamento_id=lancamento_id

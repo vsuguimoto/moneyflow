@@ -26,10 +26,10 @@ class BancoDeDados:
                 tipo TEXT CHECK(tipo IN ('C', 'D')) NOT NULL,
                 valor REAL NOT NULL,
                 data_compra TIMESTAMP,
-                categoria_id INTEGER,
-                pessoa_id INTEGER NOT NULL,
-                FOREIGN KEY (pessoa_id) REFERENCES pessoas (id),
-                FOREIGN KEY (categoria_id) REFERENCES categorias (id)
+                categorias_id INTEGER,
+                pessoas_id INTEGER NOT NULL,
+                FOREIGN KEY (pessoas_id) REFERENCES pessoas (id),
+                FOREIGN KEY (categorias_id) REFERENCES categorias (id)
             )
         """)
 
@@ -73,14 +73,33 @@ class BancoDeDados:
         return valores.fetchall()
 
 
-    def criar_lancamento(self, nome, tipo, valor, data_compra, categoria_id, pessoa_id):
+    def criar_lancamento(self, nome, tipo, valor, data_compra, categorias_id, pessoas_id):
         cursor = self.conexao.cursor()
-        cursor.execute(f"INSERT INTO lancamentos (nome, tipo, valor, data_compra, categoria_id, pessoa_id) VALUES ('{nome}', '{tipo}', {valor}, '{data_compra}', {categoria_id}, {pessoa_id})")
+        cursor.execute(f"INSERT INTO lancamentos (nome, tipo, valor, data_compra, categorias_id, pessoas_id) VALUES ('{nome}', '{tipo}', {valor}, '{data_compra}', {categorias_id}, {pessoas_id})")
         self.conexao.commit()
 
     def apagar_lancamento(self, lancamento_id):
         cursor = self.conexao.cursor()
         cursor.execute(f"DELETE FROM lancamentos WHERE id = {lancamento_id}")
+
+
+    def criar_visao_mes(self):
+        cursor = self.conexao.cursor()
+        cursor.execute('DROP TABLE IF EXISTS lancamentos_visao_mes')
+        cursor.execute("""
+            CREATE TABLE IF NOT EXISTS lancamentos_visao_mes AS
+            SELECT
+                pessoas.nome,
+                strftime('%Y-%m', lancamentos.data_compra) AS ano_mes,
+                categorias.nome,
+                lancamentos.tipo,
+                ROUND(SUM(lancamentos.valor),2) AS valor_total
+            FROM lancamentos
+            LEFT JOIN pessoas ON lancamentos.pessoas_id = pessoas.id
+            LEFT JOIN categorias ON lancamentos.categorias_id = categorias.id
+            GROUP BY pessoas.nome, ano_mes, categorias.nome, lancamentos.tipo;
+        """)
+        self.conexao.commit()
 
     def fechar_conexao(self):
         self.conexao.close()
