@@ -16,4 +16,8 @@ class LancamentoUseCase:
             categoria_id=lancamento.categoria_id,
             pessoa_id=lancamento.pessoa_id
         )
-        
+    
+    def remover_lancamento(self, lancamento_id) -> None:
+        self.banco_de_dados.apagar_lancamento(
+            lancamento_id=lancamento_id
+        )

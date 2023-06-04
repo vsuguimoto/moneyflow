@@ -78,5 +78,9 @@ class BancoDeDados:
         cursor.execute(f"INSERT INTO lancamentos (nome, tipo, valor, data_compra, categoria_id, pessoa_id) VALUES ('{nome}', '{tipo}', {valor}, '{data_compra}', {categoria_id}, {pessoa_id})")
         self.conexao.commit()
 
+    def apagar_lancamento(self, lancamento_id):
+        cursor = self.conexao.cursor()
+        cursor.execute(f"DELETE FROM lancamentos WHERE id = {lancamento_id}")
+
     def fechar_conexao(self):
         self.conexao.close()
