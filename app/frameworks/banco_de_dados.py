@@ -26,7 +26,6 @@ class BancoDeDados:
                 tipo TEXT CHECK(tipo IN ('C', 'D')) NOT NULL,
                 valor REAL NOT NULL,
                 data_compra TIMESTAMP,
-                data_lancamento TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 categoria_id INTEGER,
                 pessoa_id INTEGER NOT NULL,
                 FOREIGN KEY (pessoa_id) REFERENCES pessoas (id),
@@ -44,7 +43,7 @@ class BancoDeDados:
 
         self.conexao.commit()
 
-    def criar_categoria(self, nome, descricao=None):
+    def criar_categoria(self, nome):
         cursor = self.conexao.cursor()
         cursor.execute(f"INSERT INTO categorias (nome) VALUES ('{nome}')")
         self.conexao.commit()
