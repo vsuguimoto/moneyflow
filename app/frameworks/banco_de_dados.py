@@ -89,10 +89,10 @@ class BancoDeDados:
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS lancamentos_visao_mes AS
             SELECT
-                pessoas.nome,
+                pessoas.nome nome_pessoa,
                 strftime('%Y-%m', lancamentos.data_compra) AS ano_mes,
-                categorias.nome,
-                lancamentos.tipo,
+                categorias.nome categoria,
+                lancamentos.tipo tipo_lancamento,
                 ROUND(SUM(lancamentos.valor),2) AS valor_total
             FROM lancamentos
             LEFT JOIN pessoas ON lancamentos.pessoas_id = pessoas.id
@@ -100,6 +100,11 @@ class BancoDeDados:
             GROUP BY pessoas.nome, ano_mes, categorias.nome, lancamentos.tipo;
         """)
         self.conexao.commit()
+    
+    def obter_visao_mes(self):
+        cursor = self.conexao.cursor()
+        visao_mes =  cursor.execute("SELECT * FROM lancamentos_visao_mes")
+        return visao_mes.fetchall()
 
     def fechar_conexao(self):
         self.conexao.close()
