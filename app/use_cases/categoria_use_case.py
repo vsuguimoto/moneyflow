@@ -10,7 +10,7 @@ class CategoriaUseCase:
     
     def criar_categoria_use_case(self, nome_categoria):
         nome_upper = nome_categoria.upper()
-        self.banco_de_dados.criar_categoria(nome=nome_categoria)
+        self.banco_de_dados.criar_categoria(nome=nome_upper)
     
     def obter_categoria_use_case(self):
         categorias = self.banco_de_dados.obter_categoria()
