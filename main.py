@@ -1,5 +1,5 @@
 from app.interfaces.controllers.pessoa_controller import PessoaController
-from app.interfaces.ui.streamlit_app import home_page,lancamentos
+from app.interfaces.ui.lancamentos import lancamentos
 
 import streamlit as st
 
