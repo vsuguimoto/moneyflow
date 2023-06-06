@@ -1,0 +1,9 @@
+[[pages]]
+path = "app/interfaces/ui/dashboard.py"
+name = "Dashboard"
+icon = "📊"
+
+[[pages]]
+path = "app/interfaces/ui/lancamentos.py"
+name = "Lançamentos"
+icon = "💳"
