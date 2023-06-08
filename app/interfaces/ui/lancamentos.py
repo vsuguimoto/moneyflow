@@ -13,7 +13,7 @@ import streamlit as st
 
 def lancamentos():
     show_pages_from_config()
-    add_logo('app/interfaces/ui/logo/Money Flow.png')
+    add_logo('app/interfaces/ui/logo/logo.png')
     st.header('Money flow')
 
     ABAS = st.tabs(['Lançamento', 'Gerenciar pessoas', 'Gerenciar categorias'])
@@ -105,3 +105,6 @@ def lancamentos():
             time.sleep(3.5)
             st.experimental_rerun()
 
+
+if __name__ == "__main__":
+    lancamentos()
