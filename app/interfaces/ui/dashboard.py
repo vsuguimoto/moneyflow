@@ -9,7 +9,7 @@ def dashboard():
     show_pages_from_config()
     add_logo('app/interfaces/ui/logo/logo.png', height=120)
 
-    st.header('MoneyFlow')
+    st.header('Money flow')
     
     if st.button('Atualizar'):
         st.experimental_rerun()
