@@ -12,7 +12,7 @@ class DataVizUseCase:
         dados_agrupados = self.banco_de_dados.obter_visao_mes()
         df_agrupados = pd.DataFrame(
             dados_agrupados,
-            columns=['Usuario', 'Mês da compra', 'Categoria', 'Tipo de lançamento', 'Valor Total']
+            columns=['Usuario', 'Mês da compra', 'Categoria', 'Tipo de lançamento', 'Valor total']
             )
         return df_agrupados
     

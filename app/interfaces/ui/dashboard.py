@@ -5,12 +5,23 @@ from streamlit_extras.app_logo import add_logo
 import streamlit as st
 
 
-show_pages_from_config()
-add_logo('app/interfaces/ui/logo/logo.png', height=120)
+def dashboard():
+    show_pages_from_config()
+    add_logo('app/interfaces/ui/logo/logo.png', height=120)
 
-st.header('MoneyFlow')
+    st.header('MoneyFlow')
+    
+    if st.button('Atualizar'):
+        st.experimental_rerun()
 
-controlador_dataviz = DataVizController()
-dados_dataviz = controlador_dataviz.obter_dados()
+    controlador_dataviz = DataVizController()
+    
+    
+    
+    st.plotly_chart(controlador_dataviz.create_treemap_express())
 
-st.table(dados_dataviz)
+
+
+
+if __name__ == "__main__":
+    dashboard()
