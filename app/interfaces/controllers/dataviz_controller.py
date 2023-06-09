@@ -6,12 +6,15 @@ import plotly.express as px
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
+# TODO -> Expor filtros de data para todas as visualizações
+
+
 class DataVizController:
 
     def __init__(self):
         self.dataviz_use_case = DataVizUseCase()
 
-    def __obter_dados(self):
+    def __obter_dados_agrupados(self):
         try:
             dados_viz = self.dataviz_use_case.obter_valores_agrupados()
             return dados_viz
@@ -22,7 +25,7 @@ class DataVizController:
     
     def create_treemap_express(self):
         
-        data = self.__obter_dados()
+        data = self.__obter_dados_agrupados()
         
         fig = px.treemap(
             data,

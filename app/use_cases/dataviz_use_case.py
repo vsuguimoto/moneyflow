@@ -1,6 +1,8 @@
 from app.frameworks.banco_de_dados import BancoDeDados
 import pandas as pd
 
+# TODO -> Criar GET de dados completos, revisar a necessidade do agrupamento
+# TODO -> Criar use case para obter dados do slider
 
 class DataVizUseCase:
 
@@ -14,5 +16,10 @@ class DataVizUseCase:
             dados_agrupados,
             columns=['Usuario', 'Mês da compra', 'Categoria', 'Tipo de lançamento', 'Valor total']
             )
+        
+        df_agrupados['Tipo de lançamento'] = df_agrupados['Tipo de lançamento'].map({'C':'Crédito', 'D': 'Débito'})
+        
         return df_agrupados
+    
+    
     
