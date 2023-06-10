@@ -103,8 +103,25 @@ class BancoDeDados:
     
     def obter_visao_mes(self):
         cursor = self.conexao.cursor()
-        visao_mes =  cursor.execute("SELECT * FROM lancamentos_visao_mes")
+        visao_mes = cursor.execute("SELECT * FROM lancamentos_visao_mes")
         return visao_mes.fetchall()
 
+    def obter_visao_geral(self):
+        cursor = self.conexao.cursor()
+        dados = cursor.execute("""
+        SELECT
+            pessoas.nome nome_pessoa,
+            lancamentos.data_compra,
+            lancamentos.nome nome_lancamento,
+            categorias.nome categoria,
+            lancamentos.tipo tipo_lancamento,
+            lancamentos.valor
+        FROM lancamentos
+        LEFT JOIN pessoas ON lancamentos.pessoas_id = pessoas.id
+        LEFT JOIN categorias ON lancamentos.categorias_id = categorias.id
+        """)
+        
+        return dados.fetchall()
+    
     def fechar_conexao(self):
         self.conexao.close()
