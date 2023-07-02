@@ -105,6 +105,7 @@ def lancamentos():
             time.sleep(3.5)
             st.experimental_rerun()
 
-
+if __name__ == '__main__':
+    lancamentos()
 if __name__ == "__main__":
     lancamentos()
